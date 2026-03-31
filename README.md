@@ -1,5 +1,6 @@
 # SKLive2
 Super-Kamiokande 3D Live on Raspberry Pi
+<img src="skicon.png">
 
 <p align="center">
   <img src="sklive_demo2.gif">
