@@ -1,4 +1,4 @@
-# ラズパイ移植
+# ラズパイ移植 20260331
 import cv2
 import numpy as np
 import time
