@@ -7,7 +7,7 @@ Super-Kamiokande 3D Live on Raspberry Pi
 
 ## Description
 東京大学宇宙線研究所が公開している[リアルタイムデータ](https://www-sk.icrr.u-tokyo.ac.jp/realtimemonitor/)を解析し、スーパーカミオカンデ内部の PMT（光電子増倍管）配置に合わせてイベントをプロットします。
-<br>Raspberry Pi & 5インチモニタ の構成で科学インテリアになります
+<br>Raspberry Pi & 5インチモニタ の構成で部屋に置ける知的な科学オブジェになります。
 ## Features
 * 10秒ごとに最新データを自動取得。
 * 待機中もタッチ操作で 3D 円柱を自由に回転可能。
@@ -19,7 +19,7 @@ Super-Kamiokande 3D Live on Raspberry Pi
 * 依存ライブラリ: `pandas`, `numpy`, `matplotlib`, `requests`, `Pillow`, `opencv-python` [一覧 libs.txt](libs.txt)
 
 ## Installation
-任意のディレクトリに`sklive2.py`, `libs.txt` を入れる
+任意のディレクトリに`sklive2.py`と`libs.txt` を入れる。
 ```bash
 python -m venv .venv  # 独立のライブラリ環境を作る
 source .venv/bin/activate  
@@ -35,11 +35,12 @@ python sklive2.py  # 実行
 ```
 ## Technical Challenges (開発のポイント)
 ### 1. PMT座標の抽出
-ソースとなる配信データは数値(CSV)ではなく、[平面のgif画像](https://www-sk.icrr.u-tokyo.ac.jp/realtimemonitor/skev.gif)です。画像から各PMTの色情報をピックアップします<BR>
+ソースとなる配信データは数値(CSV)ではなく、[平面画像 skev.gif](https://www-sk.icrr.u-tokyo.ac.jp/realtimemonitor/skev.gif)です。<BR>
+画像から各PMTの色情報をピックアップします。<BR>
 <img width="564" height="325" src="skev_sample.gif"><BR>
 
 難点として配信されるgif画像のサイズは日によって異なり画像上のPMT(x,y)座標も固定ではありません。<br>
-そのため、プログラム開始時に、```cv2.connectedComponentsWithStats()```で画像認識で座標マップを取得する工夫を入れました<br>
+そのため、プログラム冒頭に、```cv2.connectedComponentsWithStats()```で画像認識で座標マップを取得する工夫を入れました<br>
 
 ### 2. 座標変換と3Dマッピング
 平面上のピクセルを、円柱(直径=1, 高さ=1)に合わせて再配置しました。
