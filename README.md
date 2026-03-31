@@ -19,11 +19,20 @@ Super-Kamiokande 3D Live on Raspberry Pi
 * 依存ライブラリ: `pandas`, `numpy`, `matplotlib`, `requests`, `Pillow`, `opencv-python` [一覧 libs.txt](libs.txt)
 
 ## Installation
+任意のディレクトリに`sklive2.py`, `libs.txt` を入れる
 ```bash
+python -m venv .venv  # 独立のライブラリ環境を作る
+source .venv/bin/activate  
 pip install -r libs.txt  # ライブラリインストール
 python sklive2.py  # 実行
 ```
+モニタサイズに合わせた描画エリアを調整する際は`def run_sk_realtime_monitor()` 内の以下コメント周辺のパラメータを調整してください。
+```bash
+# 描画ウィンドウの準備 (ラズパイ用設定) ---
 
+# 表示設定
+
+```
 ## Technical Challenges (開発のポイント)
 ### 1. PMT座標の抽出
 ソースとなる配信データは数値(CSV)ではなく、[平面のgif画像](https://www-sk.icrr.u-tokyo.ac.jp/realtimemonitor/skev.gif)です。画像から各PMTの色情報をピックアップします<BR>
