@@ -16,8 +16,7 @@ Super-Kamiokande 3D Live on Raspberry Pi
 * Raspberry Pi 4 / 5
 * DSI タッチモニター (5inch 480x800を使用)
 * Python 3.10+
-* 依存ライブラリ: `pandas`, `numpy`, `matplotlib`, `requests`, `Pillow`
-* [ライブラリ一覧 libs.txt](libs.txt)
+* 依存ライブラリ: `pandas`, `numpy`, `matplotlib`, `requests`, `Pillow`, `opencv-python` [一覧 libs.txt](libs.txt)
 
 ## Installation
 ```bash
@@ -27,7 +26,22 @@ python sklive2.py  # 実行
 
 ## Technical Challenges (開発のポイント)
 ### 1. PMT座標の抽出
-ソースとなる配信データは数値(CSV)ではなく、[平面のgif画像](https://www-sk.icrr.u-tokyo.ac.jp/realtimemonitor/skev.gif)です。
-<img width="564" height="325" src="skev_sample.gif">
-難点として、配信されるgif画像サイズは日によって変わるようで、PMTの画像上の(x,y)座標も固定ではありません。<br>
-そのため、プログラム開始時に、```cv2.connectedComponentsWithStats()```で座標マップを取得し、plots2.csvにリストを作ることを実施しました。<br>
+ソースとなる配信データは数値(CSV)ではなく、[平面のgif画像](https://www-sk.icrr.u-tokyo.ac.jp/realtimemonitor/skev.gif)です。画像から各PMTの色情報をピックアップします<BR>
+<img width="564" height="325" src="skev_sample.gif"><BR>
+
+難点として配信されるgif画像のサイズは日によって異なり画像上のPMT(x,y)座標も固定ではありません。<br>
+そのため、プログラム開始時に、```cv2.connectedComponentsWithStats()```で画像認識で座標マップを取得する工夫を入れました<br>
+
+### 2. 座標変換と3Dマッピング
+平面上のピクセルを、円柱(直径=1, 高さ=1)に合わせて再配置しました。
+* 側面は、X座標を円柱の角度（θ）に変換
+* 天井と底面は、z=1, z=0で直径１の円に配置
+* `matplotlib`で3D plot を描画
+
+## Acknowledge
+Data source: [ICRR, The University of Tokyo](https://www-sk.icrr.u-tokyo.ac.jp/realtimemonitor/)
+
+
+
+
+
