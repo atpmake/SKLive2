@@ -41,7 +41,8 @@ python sklive2.py  # 実行
 <img width="564" height="325" src="skev_sample.gif"><BR>
 
 難点として配信されるgif画像のサイズは日によって異なり画像上のPMT(x,y)座標も固定ではありません。<br>
-そのため、プログラム冒頭に、```cv2.connectedComponentsWithStats()```で画像認識で座標マップを取得する工夫を入れました。<br>
+そのため、プログラム冒頭に、```cv2.connectedComponentsWithStats()```で画像認識で白線を手がかりに座標マップを取得する工夫を入れました。<br>
+完全ではないので手直し対応が必要です。<br>
 
 ### 2. 座標変換と3Dマッピング
 平面上のピクセルを、円柱(直径=1, 高さ=1)に合わせて再配置しました。
