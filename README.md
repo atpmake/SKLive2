@@ -27,13 +27,7 @@ source .venv/bin/activate
 pip install -r libs.txt  # ライブラリインストール
 python sklive2.py  # 実行
 ```
-モニタサイズに合わせた描画エリアを調整する際は`def run_sk_realtime_monitor()` 内の以下コメント周辺のパラメータを調整してください。
-```bash
-# 描画ウィンドウの準備 (ラズパイ用設定) ---
 
-# 表示設定
-
-```
 ## Technical Challenges (開発のポイント)
 ### 1. PMT座標の抽出
 ソースとなる配信データは数値(CSV)ではなく、[平面画像 skev.gif](https://www-sk.icrr.u-tokyo.ac.jp/realtimemonitor/skev.gif)です。<BR>
@@ -42,7 +36,7 @@ python sklive2.py  # 実行
 
 難点として配信されるgif画像のサイズは日によって異なり画像上のPMT(x,y)座標も固定ではありません。<br>
 そのため、プログラム冒頭に、```cv2.connectedComponentsWithStats()```で画像認識で白線を手がかりに座標マップを取得する工夫を入れました。<br>
-完全ではないので手直し対応が必要です。<br>
+完全ではありません<br>
 
 ### 2. 座標変換と3Dマッピング
 平面上のピクセルを、円柱(直径=1, 高さ=1)に合わせて再配置しました。
