@@ -1,4 +1,4 @@
-# ラズパイ移植 20260331
+# ラズパイ移植 test10
 import cv2
 import numpy as np
 import time
@@ -20,11 +20,14 @@ running = True
 def detect_areas(img):
     global area_a, area_b, area_c
     if img is None: return False
+    h,w = img.shape[:2]
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # --- 1. area_a (側面) 検出 ---
-    scan_x_start, scan_x_end = 100, 1500
-    search_y_start, search_y_end = 300, 750
+    # scan_x_start, scan_x_end = 100, 1500
+    # search_y_start, search_y_end = 300, 750
+    scan_x_start, scan_x_end = 10, w - 10
+    search_y_start, search_y_end = int(h * 0.3), int(h * 0.7)
     threshold_line = 150
     y_scores = [np.mean(gray[y, scan_x_start:scan_x_end]) for y in range(search_y_start, search_y_end)]
     line_indices = [i + search_y_start for i in range(1, len(y_scores)-1) 
@@ -37,7 +40,8 @@ def detect_areas(img):
     area_a = Rect(a_left_x, a_top_y, a_right_x - a_left_x, a_bottom_y - a_top_y)
 
     # --- 2. area_b (上面) 検出 ---
-    t_search_x_start, t_search_x_end = 550, 1150
+    # t_search_x_start, t_search_x_end = 400, 900
+    t_search_x_start, t_search_x_end = int(w * 0.3), int(w * 0.66) #2026/4/29
     threshold_white = 220
     b_top_y = next((y for y in range(5, area_a.y) if np.sum(gray[y, t_search_x_start:t_search_x_end] > threshold_white) > 10), None)
     if b_top_y is not None:
@@ -319,8 +323,10 @@ def run_sk_realtime_monitor(csv_file='plots2.csv',url=''):
             start_wait_time = time.time()
             while (time.time() - start_wait_time) < update_interval:
                 if not running: break
-                plt.pause(0.1) # GUIイベントを処理しつつ待機
-
+                # plt.pause(0.1) # GUIイベントを処理しつつ待機
+                fig.canvas.flush_events()
+                time.sleep(0.1)
+                
     except KeyboardInterrupt:
         print("\n停止します。")
     except Exception as e:
