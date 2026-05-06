@@ -47,15 +47,6 @@ python sklive2.py  # 実行
 ## Acknowledge
 Data source: [ICRR, The University of Tokyo](https://www-sk.icrr.u-tokyo.ac.jp/realtimemonitor/)
 
-## 動作の流れ
-graph TD
-    A[<b>prepare_learned_image</b><br/>座標特定用の画像を用意] --> B
-    B[<b>fetch_image_data</b><br/>サーバーから最新GIFを取得] --> C
-    C[<b>detect_areas</b><br/>画像内の『側面・上面・下面』エリアを検出] --> D
-    D[<b>check_pmt_activity</b><br/>センサーが十分に光っているか確認] --> E
-    E[<b>extract_all_pmts</b><br/>全センサーの格子座標を抽出してリスト化] --> F
-    F[<b>save_plots_csv</b><br/>3D変換用の設計図『CSVファイル』を出力]
-    
 
 
 
